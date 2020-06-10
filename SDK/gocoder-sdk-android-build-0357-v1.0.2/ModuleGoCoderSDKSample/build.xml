@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project name="ModuleGoCoderSDKSample" default="jar" basedir=".">
+
+	<!-- The server module will be automatically to ths location after building -->
+	<property name="wowza.lib.dir" value="/Library/WowzaStreamingEngine/lib"/>
+	<property name="jar.filename" value="ModuleGoCoderSDKSample.jar"/>
+	<property name="core.build.dir" value="bin"/>
+	<property name="src.dir" value="src"/>
+
+	<target name="clean">
+		<delete dir="${core.build.dir}"/>
+	</target>
+
+	<path id="my-classpath">
+		<fileset dir="${wowza.lib.dir}">
+			<include name="**.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="${core.build.dir}"/>
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${core.build.dir}">
+			<classpath refid="my-classpath"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar jarfile="${wowza.lib.dir}/${jar.filename}">
+			<fileset dir="${core.build.dir}"/>
+		</jar>
+	</target>
+
+</project>
